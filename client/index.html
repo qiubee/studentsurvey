@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Vragenlijst Medezeggenschap & Studentenparticipatie</title>
+	<link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+	<h1>Vragenlijst Medezeggenschap & Studentenparticipatie</h1>
+	<p>Bedankt dat je deze vragenlijst wilt invullen. De vragen gaan over wat jij weet en vindt van het bestuur op de HvA. Dit duurt ongeveer 5 minuten.</p>
+	<form action="POST">
+		<fieldset>
+			<legend>Algemeen</legend>
+			<label>Hoe oud ben je?<input name="leeftijd" type="number" min="4" max="62"></label>
+			<label">Welke opleiding volg je?
+				<select name="opleiding" required>
+					<option value="">-- Kies jouw opleiding --</option>
+					<option value="alo">Academie voor Lichamelijke Opvoeding (ALO)</option>
+					<option value="accountancy">Accountancy</option>
+					<option value="amfi">AMFI - Fashion & Textile Technologies</option>
+					<option value="amsib">AMSIB - International Business</option>
+					<option value="aviation">Aviation</option>
+					<option value="bedrijfskunde">Bedrijfskunde</option>
+					<option value="bestuurskunde">Bestuurskunde</option>
+					<option value="biomedische-technologie">Biomedische Technologie</option>
+					<option value="built-environment">Built Environment</option>
+					<option value="commerciele-economie">Commerciële Economie</option>
+					<option value="communicatie">Communicatie</option>
+					<option value="communication-and-Multimedia-design">Communication and Multimedia Design (CMD)</option>
+					<option value="creative-business">Creative Business</option>
+					<option value="engineering">Engineering</option>
+					<option value="ergotherapie">Ergotherapie</option>
+					<option value="european-school-of-physiotherapy">European School of Physiotherapy</option>
+					<option value="finance-and-control">Finance & Control</option>
+					<option value="finance-tax-and-advice">Finance, Tax and Advice</option>
+					<option value="forensisch-onderzoek">Forensisch Onderzoek</option>
+					<option value="fysiotherapie">Fysiotherapie</option>
+					<option value="hbo-ict">HBO-ICT</option>
+					<option value="hbo-rechten">HBO-Rechten</option>
+					<option value="hbo-verpleegkunde">HBO-Verpleegkunde</option>
+					<option value="human-resource-management">Human Resource Management</option>
+					<option value="interprofessionele-paramedische-zorg">Interprofessionele Paramedische Zorg</option>
+					<option value="leraar-aardrijkskunde">Leraar Aardrijkskunde</option>
+					<option value="leraar-algemene-economie">Leraar Algemene Economie</option>
+					<option value="leraar-bedrijfseconomie">Leraar Bedrijfseconomie </option>
+					<option value="leraar-biologie">Leraar Biologie</option>
+					<option value="leraar-duits">Leraar Duits</option>
+					<option value="leraar-engels">Leraar Engels</option>
+					<option value="leraar-frans">Leraar Frans</option>
+					<option value="leraar-geschiedenis">Leraar Geschiedenis</option>
+					<option value="leraar-gezondheidszorg-en-welzijn">Leraar Gezondheidszorg en Welzijn</option>
+					<option value="leraar-horeca-en-voeding">Leraar Horeca en Voeding</option>
+					<option value="leraar-maatschappijleer">Leraar Maatschappijleer</option>
+					<option value="leraar-mens-en-technologie">Leraar Mens en Technologie</option>
+					<option value="leraar-natuurkunde">Leraar Natuurkunde</option>
+					<option value="leraar-nederlands">Leraar Nederlands</option>
+					<option value="leraar-pedagogiek">Leraar Pedagogiek</option>
+					<option value="leraar-scheikunde">Leraar Scheikunde</option>
+					<option value="leraar-wiskunde">Leraar Wiskunde</option>
+					<option value="logistics-engineering">Logistics Engineering</option>
+					<option value="logistics-management">Logistics Management</option>
+					<option value="maritiem-officier">Maritiem Officier</option>
+					<option value="oefentherapie">Oefentherapie</option>
+					<option value="pabo-hva">Pabo HvA</option>
+					<option value="pedagogiek">Pedagogiek</option>
+					<option value="sociaal-juridische-dienstverlening">Sociaal Juridische Dienstverlening</option>
+					<option value="social-work">Social Work</option>
+					<option value="sport-studies">Sport Studies</option>
+					<option value="sportkunde">Sportkunde</option>
+					<option value="technische-natuurkunde">Technische Natuurkunde</option>
+					<option value="toegepaste-psychologie">Toegepaste Psychologie</option>
+					<option value="toegepaste-wiskunde">Toegepaste Wiskunde</option>
+					<option value="universitaire-pabo-van-amsterdam">Universitaire Pabo van Amsterdam</option>
+					<option value="voeding-en-dietetiek">Voeding en Diëtetiek</option>
+				</select>
+			</label>
+			<label>In welke studiejaar zit je?
+				<select name="studiejaar">
+					<option value="1">1</option>
+					<option value="1">2</option>
+					<option value="1">3</option>
+					<option value="1">4</option>
+				</select>
+			</label>
+		</fieldset>
+		<fieldset>
+			<legend>Betrokkenheid</legend>
+			<div>
+				<p>Ik voel mij betrokken bij mijn opleiding?</p>
+				<label><input name="betrokkenheid-opleiding" value="1" type="radio">Helemaal mee oneens</label>
+				<label><input name="betrokkenheid-opleiding" value="2" type="radio">Mee oneens</label>
+				<label><input name="betrokkenheid-opleiding" value="3" type="radio">Neutraal</label>
+				<label><input name="betrokkenheid-opleiding" value="4" type="radio">Mee eens</label>
+				<label><input name="betrokkenheid-opleiding" value="5" type="radio">Helemaal mee eens</label>
+			</div>
+			<div>
+				<p>Ik voel mij betrokken bij de hogeschool?</p>
+				<label><input name="betrokkenheid-hogeschool" value="1" type="radio">Helemaal mee oneens</label>
+				<label><input name="betrokkenheid-hogeschool" value="2" type="radio">Mee oneens</label>
+				<label><input name="betrokkenheid-hogeschool" value="3" type="radio">Neutraal</label>
+				<label><input name="betrokkenheid-hogeschool" value="4" type="radio">Mee eens</label>
+				<label><input name="betrokkenheid-hogeschool" value="5" type="radio">Helemaal mee eens</label>
+			</div>
+			<label>Welke onderwerpen vind jij belangrijk tijdens je studie?<textarea name="onderwerpen-belangrijk-studie" rows="5"></textarea></label>
+		</fieldset>
+		<fieldset>
+			<legend>Medezeggenschapsraad</legend>
+			<div>
+				<p>Weet je van het bestaan van de Medezeggenschapsraad?</p>
+				<label><input name="bestaan-medezeggenschapsraad" value="ja" type="radio">Ja</label>
+				<label><input name="bestaan-medezeggenschapsraad" value="nee" type="radio">Nee</label>
+			</div>
+			<div>
+				<p>Weet je wat de Medezeggenschapsraad doet?</p>
+				<label><input name="werkzaamheden-medezeggenschapsraad" value="ja" type="radio">Ja</label>
+				<label><input name="werkzaamheden-medezeggenschapsraad" value="nee" type="radio">Nee</label>
+			</div>
+		</fieldset>
+		<input type="submit" value="Insturen">
+	</form>
+</body>
+</html>

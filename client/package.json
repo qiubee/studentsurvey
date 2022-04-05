@@ -1,0 +1,11 @@
+{
+  "name": "studentsurvey-client",
+  "version": "0.1.0",
+  "description": "studentsurvey client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "qiubee",
+  "license": "MIT"
+}
