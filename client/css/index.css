@@ -1,0 +1,84 @@
+@font-face {
+    font-family: Tommy Soft;
+    font-weight: 400;
+    src: url("fonts/tommy-soft-regular.otf") format("opentype");
+}
+
+@font-face {
+    font-family: Tommy Soft;
+    font-weight: 500;
+    src: url("fonts/tommy-soft-medium.otf") format("opentype");
+}
+
+@font-face {
+    font-family: Tommy Soft;
+    font-weight: 700;
+    src: url("fonts/tommy-soft-bold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: Tommy Soft;
+    font-weight: 900;
+    src: url("fonts/tommy-soft-black.otf") format("opentype");
+}
+
+body, body * {
+	margin: 0;
+    padding: 0;
+    font-family: Tommy Soft, Avenir, Helvetica, Roboto, Ubuntu, Arial, sans-serif;
+}
+
+body {
+    margin: 0 0.5rem;
+}
+
+p {
+    font-size: 1rem;
+}
+
+h1 {
+    font-size: 1.75rem;
+    text-align: center;
+    margin: 1rem 0 2rem 0;
+}
+
+h1 ~ p:first-of-type {
+    margin-bottom: 2.5rem;
+}
+
+form fieldset {
+    border: none;
+    margin: 1.5rem 0 2.5rem 0;
+}
+
+legend {
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+}
+
+div, fieldset:first-of-type > label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.75rem;
+}
+
+input {
+    max-width: 7.5rem;
+}
+
+input[type="number"] {
+    max-width: 5rem;
+    -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.question, fieldset:first-of-type > label {
+    font-size: 1rem;
+    font-weight: 500;
+}
