@@ -22,6 +22,12 @@
     src: url("fonts/tommy-soft-black.otf") format("opentype");
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body, body * {
 	margin: 0;
     padding: 0;
@@ -30,6 +36,11 @@ body, body * {
 
 body {
     margin: 0 0.5rem;
+}
+
+main {
+    margin: 0 auto;
+    max-width: 30rem;
 }
 
 p {
@@ -43,7 +54,12 @@ h1 {
 }
 
 h1 ~ p:first-of-type {
-    margin-bottom: 2.5rem;
+    margin-bottom: 5rem;
+    word-break: break-word;
+}
+
+form {
+    margin-bottom: 2rem;
 }
 
 form fieldset {
@@ -51,34 +67,218 @@ form fieldset {
     margin: 1.5rem 0 2.5rem 0;
 }
 
+form fieldset:last-of-type {
+    margin-bottom: 1rem;
+}
+
+form fieldset label {
+    margin-bottom: 0.25rem;
+}
+
 legend {
     font-size: 1.4rem;
     font-weight: 500;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
 }
 
-div, fieldset:first-of-type > label {
+fieldset > div, fieldset:first-of-type > label {
     display: flex;
     flex-direction: column;
     margin-bottom: 1.75rem;
 }
 
-input {
+fieldset:first-of-type > label > * {
+    margin-top: 0.5rem;
+}
+
+div label{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+input:not([type="submit"]) {
     max-width: 7.5rem;
 }
 
+input, textarea {
+    border: 0.175rem solid #8190a3;
+}
+
+input:focus, textarea:focus {
+    border-color: #2576e0;
+}
+
+*:focus-visible {
+    outline: 0.05rem solid #2576e0;
+}
+
 input[type="number"] {
-    max-width: 5rem;
+    max-width: 3rem;
+    font-size: 1rem;
+    padding: 0.25rem;
+    text-align: center;
     -moz-appearance: textfield;
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    margin-right: 0.5rem;
+}
+
+input[type="submit"] {
+    display: flex;
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+    border: 0.2rem solid #2576e0;
+    background-color: white;
+    color: #2576e0;
+    margin: 1.5rem auto 2.5rem auto;
+}
+
+input[type="submit"]:hover {
+    background-color: #2576e0;
+    color: white;
+    cursor: pointer;
+}
+
+input[type="submit"]:active {
+    background-color: #13478a;
+    border-color: #13478a;
+}
+
+input[type="radio"] {
+    width: 1.2em;
+    height: 1.2em;
+    color: #2576e0;
+    border: 0.15em solid #8190a3;
+    border-radius: 50%;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+input[type="radio"]::before {
+    content: "";
+    display: block;
+    width: 0.6em;
+    height: 0.6em;
+    margin: 0.125rem;
+    background-color: white;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 60ms transform ease;
+}
+
+input[type="radio"]:checked {
+    border-color: #2576e0;
+}
+
+input[type="radio"]:checked::before {
+    background-color: #2576e0;
+    transform: scale(1);
+}
+
+select {
+    width: 100%;
+    appearance: none;
+    border: 0.175rem solid #8190a3;
+    background-color: white;
+    color: black;
+    font-size: 1rem;
+    padding: 0.25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+select:active, select:focus {
+    border: 0.175rem solid #2576e0;
+    background-color: #5c94dd;
+    color: white;
+}
+
+.dropdown {
+    max-width: 20rem;
+    position: relative;
+}
+
+.dropdown:hover select:not(:active):not(:focus) {
+    background-color: #ddebff;
+}
+
+.dropdown::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0.5em;
+    height: 0.15em;
+    background-color: black;
+    top: calc(50% - 0.1rem);
+    right: 0.45rem;
+    transform: rotate(-45deg);
+}
+
+.dropdown::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0.5em;
+    height: 0.15em;
+    background-color: black;
+    top: calc(50% - 0.1rem);
+    right: 0.75rem;
+    transform: rotate(45deg);
+}
+
+.dropdown:focus-within::after, .dropdown:active::after {
+    background-color: white;
+}
+
+.dropdown:focus-within::before, .dropdown:active::before {
+    background-color: white;
+}
+
+textarea {
+    width: 100%;
+    max-width: 30rem;
+    margin-top: 0.25rem;
+    padding: 0.25rem;
 }
 
 .question, fieldset:first-of-type > label {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+fieldset:first-of-type > label {
+    margin-bottom: 1.75rem;
+}
+
+@media (min-width: 30rem) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h1 ~ p:first-of-type {
+        font-size: 1.1rem;
+    }
+
+    input[type="submit"] {
+        font-size: 1.5rem;
+        padding: 1rem 1.75rem;
+        margin: 2.5rem auto 5rem auto;
+    }
+}
+
+@media (min-width: 60rem) {
+    input[type="submit"] {
+        font-size: 1.25rem;
+        padding: 0.75rem 1.5rem;
+    }
 }
