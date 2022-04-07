@@ -64,7 +64,7 @@ form {
 
 form fieldset {
     border: none;
-    margin: 1.5rem 0 2.5rem 0;
+    margin: 1.5rem 0 3rem 0;
 }
 
 form fieldset:last-of-type {
@@ -79,6 +79,18 @@ legend {
     font-size: 1.4rem;
     font-weight: 500;
     margin-bottom: 1rem;
+    position: relative;
+}
+
+legend::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 0.4rem;
+    background-color: #fcda45;
+    position: absolute;
+    bottom: 0.1rem;
+    z-index: -1;
 }
 
 fieldset > div, fieldset:first-of-type > label {
@@ -91,10 +103,10 @@ fieldset:first-of-type > label > * {
     margin-top: 0.5rem;
 }
 
-div label{
+div label {
     display: flex;
     flex-direction: row;
-    align-items: baseline;
+    align-items: flex-start;
 }
 
 input:not([type="submit"]) {
@@ -157,10 +169,15 @@ input[type="radio"] {
     width: 1.2em;
     height: 1.2em;
     color: #2576e0;
-    border: 0.15em solid #8190a3;
+    border: 0.175em solid #8190a3;
     border-radius: 50%;
     appearance: none;
     -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+input[type="radio"]:hover {
+    border-color: #13478a;
 }
 
 input[type="radio"]::before {
@@ -182,6 +199,46 @@ input[type="radio"]:checked {
 input[type="radio"]:checked::before {
     background-color: #2576e0;
     transform: scale(1);
+}
+
+input[type="radio"]:checked:hover {
+    border-color: #13478a;
+}
+
+input[type="checkbox"] {
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 25%;
+    background-color: #fff;
+    border: 0.175em solid #8190a3;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+input[type="checkbox"]::before {
+    content: "";
+    display: block;
+    width: 0.6em;
+    height: 0.6em;
+    margin: 0.25rem;
+    background-color: white;
+    border-radius: 25%;
+    transform: scale(0);
+    transition: 60ms transform ease;
+}
+
+input[type="radio"]:checked {
+    border-color: #2576e0;
+}
+
+input[type="radio"]:checked::before {
+    background-color: #2576e0;
+    transform: scale(1);
+}
+
+input[type="radio"]:checked:hover {
+    border-color: #13478a;
 }
 
 select {
@@ -269,10 +326,18 @@ fieldset:first-of-type > label {
         font-size: 1.1rem;
     }
 
+    form fieldset {
+        margin: 1.5rem 0 5rem 0;
+    }
+
     input[type="submit"] {
         font-size: 1.5rem;
         padding: 1rem 1.75rem;
         margin: 2.5rem auto 5rem auto;
+    }
+
+    input[value="anders"] + div {
+        width: 100%;
     }
 }
 
