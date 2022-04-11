@@ -16,7 +16,7 @@
                 <legend>Algemeen</legend>
                 <label>Hoe oud ben je?<input name="leeftijd" type="number" min="4" max="62" required></label>
                 <label>Welke opleiding volg je?
-                    <div class="dropdown">
+                    <div class="select">
                         <select name="opleiding" required>
                             <option value="">-- Selecteer opleiding --</option>
                             <option value="alo">Academie voor Lichamelijke Opvoeding (ALO)</option>
@@ -80,7 +80,7 @@
                     </div>
                 </label>
                 <label>In welke studiejaar zit je?
-                    <div class="dropdown">
+                    <div class="select">
                         <select name="studiejaar" required>
                             <option value="">-- Selecteer studiejaar --</option>
                             <option value="1">1</option>
@@ -88,6 +88,13 @@
                             <option value="3">3</option>
                             <option value="4">4</option>
                         </select>
+                    </div>
+                    <div class="dropdown" aria-hidden="true">
+                        <span>-- Selecteer studiejaar --</span>
+                        <label><input name="studiejaar" value="1" type="radio" required>1</label>
+                        <label><input name="studiejaar" value="2" type="radio" required>2</label>
+                        <label><input name="studiejaar" value="3" type="radio" required>3</label>
+                        <label><input name="studiejaar" value="4" type="radio" required>4</label>
                     </div>
                 </label>
                 <div>
