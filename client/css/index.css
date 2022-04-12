@@ -29,7 +29,7 @@
 }
 
 body, body * {
-	margin: 0;
+    margin: 0;
     padding: 0;
     font-family: Tommy Soft, Avenir, Helvetica, Roboto, Ubuntu, Arial, sans-serif;
 }
@@ -247,13 +247,15 @@ select {
     color: black;
     font-size: 1rem;
     padding: 0.25rem;
+    padding-right: 1.25rem;
+    text-overflow: ellipsis;
 }
 
 select:active, select:focus {
     border: 0.175rem solid #2576e0;
 }
 
-.select {
+.select, .custom-select {
     max-width: 20rem;
     position: relative;
 }
@@ -262,40 +264,74 @@ select:active, select:focus {
     background-color: #ddebff;
 }
 
-.select::before {
+.select::before, .select::after {
     content: "";
     display: block;
     position: absolute;
     width: 0.5em;
     height: 0.15em;
     background-color: black;
-    top: calc(50% - 0.1rem);
+    top: 1rem;
     right: 0.45rem;
     transform: rotate(-45deg);
+    z-index: 5;
 }
 
 .select::after {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 0.5em;
-    height: 0.15em;
-    background-color: black;
-    top: calc(50% - 0.1rem);
     right: 0.75rem;
     transform: rotate(45deg);
 }
 
-.dropdown {
+.custom-select {
+    display: none;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
     font-weight: normal;
     font-size: 1rem;
+    z-index: 1;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-.dropdown input, .dropdown input::before {
-    width: 0;
-    height: 0;
+.custom-select .trigger {
+    background-color: white;
+    border: 0.175rem solid #8190a3;
+    padding: 0.25rem 0.5rem;
+}
+
+.custom-select .trigger:hover {
+    background-color: #ddebff;
+}
+
+.custom-select.open .trigger {
+    border-color: #2576e0;
+}
+
+.custom-select.open .options {
+    display: block;
+}
+
+.options {
+    display: none;
+    background-color: white;
+    border: 0.175rem solid #5c94dd;
+    border-top: 0;
+}
+
+.options div {
+    padding: 0.4rem 0.75rem;
     margin: 0;
-    border: none;
+}
+
+.options div:hover {
+    background-color: #2576e0;
+    color: white;
 }
 
 textarea {
@@ -352,5 +388,15 @@ fieldset:first-of-type > label {
     input[type="submit"] {
         font-size: 1.25rem;
         padding: 0.75rem 1.5rem;
+    }
+}
+
+@media (hover: hover) {
+    .custom-select {
+        display: block;
+    }
+
+    select:focus + .custom-select {
+        display: none;
     }
 }
