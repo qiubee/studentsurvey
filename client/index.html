@@ -15,10 +15,11 @@
             <fieldset>
                 <legend>Algemeen</legend>
                 <label>Hoe oud ben je?<input name="leeftijd" type="number" min="4" max="62" required></label>
-                <label>Welke opleiding volg je?
+                <div>
+                   <p id="opleiding" class="question">Welke opleiding volg je?</p>
                     <div class="select">
-                        <select name="opleiding" required>
-                            <option value="">-- Selecteer opleiding --</option>
+                        <select name="opleiding" aria-labelledby="opleiding" required>
+                            <option value="" selected disabled>-- Selecteer opleiding --</option>
                             <option value="alo">Academie voor Lichamelijke Opvoeding (ALO)</option>
                             <option value="accountancy">Accountancy</option>
                             <option value="amfi">AMFI - Fashion & Textile Technologies</option>
@@ -82,11 +83,12 @@
                             <div class="options"></div>
                         </div>
                     </div>
-                </label>
-                <label>In welke studiejaar zit je?
+                </div>
+                <div>
+                    <p id="studiejaar" class="question">In welke studiejaar zit je?</p>
                     <div class="select">
-                        <select name="studiejaar" required>
-                            <option value="">-- Selecteer studiejaar --</option>
+                        <select name="studiejaar" aria-labelledby="studiejaar" required>
+                            <option value="" disabled selected>-- Selecteer studiejaar --</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -97,7 +99,7 @@
                             <div class="options"></div>
                         </div>
                     </div>
-                </label>
+                </div>
                 <div>
                     <p class="question">Ben je lid van de Medezeggenschapsraad of faculteitsraad?</p>
                     <label><input name="lid-raad" value="ja-medezeggenschapsraad" type="radio" required>Ja, van de Medezeggenschapsraad</label>
