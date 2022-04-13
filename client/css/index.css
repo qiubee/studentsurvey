@@ -239,8 +239,9 @@ input[type="checkbox"]:checked:hover  {
     border-color: #13478a;
 }
 
-select {
+select, .custom-select .trigger {
     width: 100%;
+    max-height: 2.1rem;
     appearance: none;
     border: 0.175rem solid #8190a3;
     background-color: white;
@@ -260,6 +261,10 @@ select:active, select:focus {
     position: relative;
 }
 
+form fieldset:first-of-type label + div .select {
+    z-index: 3;
+}
+
 .select:hover select:not(:active):not(:focus) {
     background-color: #ddebff;
 }
@@ -274,7 +279,7 @@ select:active, select:focus {
     top: 1rem;
     right: 0.45rem;
     transform: rotate(-45deg);
-    z-index: 5;
+    z-index: 2;
 }
 
 .select::after {
@@ -300,9 +305,13 @@ select:active, select:focus {
 }
 
 .custom-select .trigger {
-    background-color: white;
-    border: 0.175rem solid #8190a3;
+    width: 100%;
+    height: 2.1rem;
     padding: 0.25rem 0.5rem;
+    padding-right: 1.25rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .custom-select .trigger:hover {
@@ -322,6 +331,8 @@ select:active, select:focus {
     background-color: white;
     border: 0.175rem solid #5c94dd;
     border-top: 0;
+    max-height: 30rem;
+    overflow-y: auto;
 }
 
 .options div {
@@ -329,9 +340,13 @@ select:active, select:focus {
     margin: 0;
 }
 
-.options div:hover {
+.options div:hover, .options div.hover {
     background-color: #2576e0;
     color: white;
+}
+
+.custom-select.open .options {
+    box-shadow: 4px 4px 12px -4px #13478a33;
 }
 
 textarea {
