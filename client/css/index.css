@@ -410,7 +410,7 @@ fieldset:first-of-type > label {
 }
 
 @media (hover: hover) {
-    .custom-select {
+    .custom-select:not(.noscript) {
         display: block;
     }
 
