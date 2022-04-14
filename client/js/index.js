@@ -9,6 +9,9 @@
             const options = select.querySelectorAll("option:not([disabled])");
             let selectedIndex = -1;
 
+            // remove noscript
+            customSelect.classList.remove("noscript");
+
             // create options
             options.forEach(function (option) {
                 const newDiv = document.createElement("div");
@@ -54,47 +57,72 @@
                 if (e.keyCode === 38) {
                     if (selectedIndex < 1) {
                         selectedIndex = options.length - 1;
+                        optionsGroup.scrollTo(0, optionsGroup.scrollHeight);
                     } else {
                         selectedIndex--;
+                        updateScrollPosition(selectedIndex, "top");
                     }
 
                     if (selectedIndex + 1 <= options.length - 1) {
-                        optionsGroup.children[selectedIndex + 1].classList.remove("hover");
+                        removeOptionHover(selectedIndex + 1);
                     }  else {
-                        optionsGroup.children[0].classList.remove("hover");
+                        removeOptionHover(0);
                     }
                 }
                 // down/next
                 if (e.keyCode === 40) {
                     if (selectedIndex === options.length - 1) {
                         selectedIndex = 0;
+                        optionsGroup.scrollTo(0, 0);
                     } else {
                         selectedIndex++;
+                        updateScrollPosition(selectedIndex, "bottom");
                     }
 
                     if (selectedIndex - 1 >= 0) {
-                        optionsGroup.children[selectedIndex - 1].classList.remove("hover");
+                        removeOptionHover(selectedIndex - 1);
                     } else {
-                        optionsGroup.children[options.length - 1].classList.remove("hover");
+                        removeOptionHover(options.length - 1);
                     }
                 }
                 // select/enter
                 if (e.keyCode === 13 || e.keyCode === 32) {
-                    const value = optionsGroup.children[selectedIndex].dataset.value;
-                    syncSelected(value);
-                    closeSelect();
+                    if (selectedIndex >= 0) {
+                        syncSelected(optionsGroup.children[selectedIndex].dataset.value);
+                        closeSelect();
+                    }
                 }
                 // esc/close
                 if (e.keyCode === 27) {
                     closeSelect();
                 }
-                optionsGroup.children[selectedIndex].classList.add("hover");
+
+                if (selectedIndex >= 0) {
+                    optionsGroup.children[selectedIndex].classList.add("hover");
+                }
             }
 
             function clickOutsideSelect(e) {
                 if (!customSelect.contains(e.target)) {
                     closeSelect();
                 }
+            }
+
+            function updateScrollPosition(optionIndex, watchDirection) {
+                const optionNode = optionsGroup.children[optionIndex];
+                if (watchDirection === "top") {
+                    if (optionsGroup.scrollTop > (optionNode.offsetTop - optionNode.offsetHeight)) {
+                        optionsGroup.scrollTo(0, optionsGroup.scrollTop - optionNode.offsetHeight);
+                    }
+                } else if (watchDirection === "bottom") {
+                    if (optionNode.offsetTop - (optionsGroup.scrollTop + optionsGroup.offsetHeight) > 0) {
+                        optionsGroup.scrollTo(0, optionNode.offsetTop - optionsGroup.offsetHeight);
+                    }
+                }
+            }
+
+            function removeOptionHover(position) {
+                optionsGroup.children[position].classList.remove("hover");
             }
 
             function closeSelect() {
