@@ -14,7 +14,7 @@
         <form action="POST">
             <fieldset>
                 <legend>Algemeen</legend>
-                <label>Hoe oud ben je?<input name="leeftijd" type="number" min="4" max="62" required></label>
+                <label>Hoe oud ben je?<input name="leeftijd" type="number" min="4" max="100" maxlength="3" pattern="^[0-9]+$/" required></label>
                 <div>
                    <p id="opleiding" class="question">Welke opleiding volg je?</p>
                     <div class="select">
@@ -153,22 +153,24 @@
                     <label><input name="werkzaamheden-medezeggenschapsraad" value="ja" type="radio" required>Ja</label>
                     <label><input name="werkzaamheden-medezeggenschapsraad" value="nee" type="radio" required>Nee</label>
                 </div>
-                <div>
-                    <p class="question">Krijg je informatie over de Medezeggenschapsraad?</p>
-                    <label><input name="informatie-medezeggenschapsraad" value="ja" type="radio" required>Ja</label>
-                    <label><input name="informatie-medezeggenschapsraad" value="nee" type="radio" required>Nee</label>
-                </div>
-                <div class="hidden">
-                    <p class="question">Op welke manier(en) krijg je informatie over de Medezeggenschapsraad?</p>
-                    <label><input name="soort-informatie-medezeggenschapsraad" value="nieuwsbrief" type="checkbox">Nieuwsbrief (via e-mail)</label>
-                    <label><input name="soort-informatie-medezeggenschapsraad" value="social-media" type="checkbox">Social media (Twitter, Facebook)</label>
-                    <label><input name="soort-informatie-medezeggenschapsraad" value="studentenvereniging" type="checkbox">Via studentenvereniging</label>
-                    <label><input name="soort-informatie-medezeggenschapsraad" value="DLO" type="checkbox">Digitale leeromgeving van de HvA (mijnHvA)</label>
-                    <label>
-                        <input name="soort-informatie-medezeggenschapsraad" value="anders" type="checkbox">
-                        <div>Anders, namelijk:<textarea name="soort-informatie-medezeggenschapsraad" rows="4"></textarea>               
-                        </div>         
-                    </label>
+                <div class="expandable">
+                    <div>
+                        <p class="question">Krijg je informatie over de Medezeggenschapsraad?</p>
+                        <label><input name="informatie-medezeggenschapsraad" value="ja" type="radio" required>Ja</label>
+                        <label><input name="informatie-medezeggenschapsraad" value="nee" type="radio" required>Nee</label>
+                    </div>
+                    <div aria-hidden="false">
+                        <p class="question">Via welke kanalen krijg je informatie over de Medezeggenschapsraad?</p>
+                        <label><input name="soort-informatie-medezeggenschapsraad" value="nieuwsbrief" type="checkbox">Nieuwsbrief (via e-mail)</label>
+                        <label><input name="soort-informatie-medezeggenschapsraad" value="social-media" type="checkbox">Social media (Twitter, Facebook)</label>
+                        <label><input name="soort-informatie-medezeggenschapsraad" value="studentenvereniging" type="checkbox">Via studentenvereniging</label>
+                        <label><input name="soort-informatie-medezeggenschapsraad" value="DLO" type="checkbox">Digitale leeromgeving van de HvA (mijnHvA, DLO)</label>
+                        <label>
+                            <input name="soort-informatie-medezeggenschapsraad" value="anders" type="checkbox">
+                            <div>Anders, namelijk:<textarea name="soort-informatie-medezeggenschapsraad" rows="4"></textarea>               
+                            </div>         
+                        </label>
+                    </div>
                 </div>
                 <div>
                     <p class="question">Zou je meer willen weten over wat de Medezeggenschapsraad doet voor jou als student?</p>
@@ -212,22 +214,24 @@
                     <label><input name="verschil-faculteitsraad-medezeggenschapsraad" value="ja" type="radio" required>Ja</label>
                     <label><input name="verschil-faculteitsraad-medezeggenschapsraad" value="nee" type="radio" required>Nee</label>
                 </div>
-                <div>
-                    <p class="question">Krijg je informatie over de faculteitsraad?</p>
-                    <label><input name="informatie-faculteitsraad" value="ja" type="radio" required >Ja</label>
-                    <label><input name="informatie-faculteitsraad" value="nee" type="radio" required>Nee</label>
-                </div>
-                <div class="hidden">
-                    <p class="question">Op welke manier(en) krijg je informatie over de faculteitsraad?</p>
-                    <label><input name="soort-informatie-faculteitsraad" value="nieuwsbrief" type="checkbox">Nieuwsbrief (via e-mail)</label>
-                    <label><input name="soort-informatie-faculteitsraad" value="social-media" type="checkbox">Social media (Twitter, Facebook)</label>
-                    <label><input name="soort-informatie-faculteitsraad" value="studentenvereniging" type="checkbox">Via studentenvereniging</label>
-                    <label><input name="soort-informatie-faculteitsraad" value="DLO" type="checkbox">Digitale leeromgeving van de HvA (mijnHvA)</label>
-                    <label>
-                        <input name="soort-informatie-faculteitsraad" value="anders" type="checkbox">
-                        <div>Anders, namelijk:<textarea name="soort-informatie-faculteitsraad" rows="4"></textarea>
-                        </div>
-                    </label>
+                <div class="expandable">
+                    <div>
+                        <p class="question">Krijg je informatie over de faculteitsraad?</p>
+                        <label><input name="informatie-faculteitsraad" value="ja" type="radio" required >Ja</label>
+                        <label><input name="informatie-faculteitsraad" value="nee" type="radio" required>Nee</label>
+                    </div>
+                    <div aria-hidden="false">
+                        <p class="question">Via welke kanalen krijg je informatie over de faculteitsraad?</p>
+                        <label><input name="soort-informatie-faculteitsraad" value="nieuwsbrief" type="checkbox">Nieuwsbrief (via e-mail)</label>
+                        <label><input name="soort-informatie-faculteitsraad" value="social-media" type="checkbox">Social media (Twitter, Facebook)</label>
+                        <label><input name="soort-informatie-faculteitsraad" value="studentenvereniging" type="checkbox">Via studentenvereniging</label>
+                        <label><input name="soort-informatie-faculteitsraad" value="DLO" type="checkbox">Digitale leeromgeving van de HvA (mijnHvA, DLO)</label>
+                        <label>
+                            <input name="soort-informatie-faculteitsraad" value="anders" type="checkbox">
+                            <div>Anders, namelijk:<textarea name="soort-informatie-faculteitsraad" rows="4"></textarea>
+                            </div>
+                        </label>
+                    </div>
                 </div>
                 <div>
                     <p class="question">Zou je meer willen weten over wat de faculteitsraad doet voor jou als student?</p>
