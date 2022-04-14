@@ -93,10 +93,10 @@ legend::before {
     z-index: -1;
 }
 
-fieldset > div, fieldset:first-of-type > label {
+fieldset > div:not(.expandable), fieldset:first-of-type > label, .expandable div {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1.75rem;
+    margin-bottom: 2rem;
 }
 
 fieldset:first-of-type > label > * {
@@ -369,12 +369,53 @@ fieldset:first-of-type > label {
     margin-bottom: 1.75rem;
 }
 
+.expandable .hidden {
+    height: 0;
+    display: none;
+}
+
+.error {
+    position: relative;
+}
+
+.error::before {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 100%;
+    background-color: orange;
+    right: 0;
+    top: 0.25rem;
+    animation: pulse 2s 4 ease;
+}
+
+.error-message {
+    font-size: 0.9rem;
+    font-weight: normal;
+    color: orangered;
+    margin-top: 0.5rem;
+}
+
 @supports (-webkit-appearance: none) or (-moz-appearance: none) {
     input[type="checkbox"],
     input[type="radio"],
     select {
         -webkit-appearance: none;
         -moz-appearance: none;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 100%;
+    }
+    50% {
+        opacity: 0%;
+    }
+    100% {
+        opacity: 100%;
     }
 }
 
