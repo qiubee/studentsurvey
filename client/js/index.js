@@ -54,7 +54,7 @@
             function keyboardNavigationSelect(e) {
                 e.preventDefault();
                 // up/previous
-                if (e.keyCode === 38) {
+                if (charCode(e) === 38) {
                     if (selectedIndex < 1) {
                         selectedIndex = options.length - 1;
                         optionsGroup.scrollTo(0, optionsGroup.scrollHeight);
@@ -70,7 +70,7 @@
                     }
                 }
                 // down/next
-                if (e.keyCode === 40) {
+                if (charCode(e) === 40) {
                     if (selectedIndex === options.length - 1) {
                         selectedIndex = 0;
                         optionsGroup.scrollTo(0, 0);
@@ -86,14 +86,14 @@
                     }
                 }
                 // select/enter
-                if (e.keyCode === 13 || e.keyCode === 32) {
+                if (charCode(e) === 13 || charCode(e) === 32) {
                     if (selectedIndex >= 0) {
                         syncSelected(optionsGroup.children[selectedIndex].dataset.value);
                         closeSelect();
                     }
                 }
                 // esc/close
-                if (e.keyCode === 27) {
+                if (charCode(e) === 27) {
                     closeSelect();
                 }
 
@@ -144,3 +144,125 @@
         });
     }
 })();
+
+(function () {
+    const multiQuestions = document.querySelectorAll(".expandable");
+    if (multiQuestions.length > 0) {
+        multiQuestions.forEach(function (multiQuestion) {
+            const secondQuestion = multiQuestion.querySelector("div:last-of-type");
+            multiQuestion.querySelectorAll("div:first-of-type input").forEach(function (input) {
+                if (input.value === "ja" && input.checked) {
+                    showSecondQuestion();
+                } else {
+                    hideSecondQuestion();
+                }
+                input.addEventListener("input", toggleSecondQuestion);
+            });
+
+            function toggleSecondQuestion() {
+                if (this.value === "ja") {
+                    showSecondQuestion();
+                } else {
+                    hideSecondQuestion();
+                }
+            }
+
+            function showSecondQuestion() {
+                secondQuestion.classList.remove("hidden");
+                secondQuestion.setAttribute("aria-hidden", "false");
+            }
+
+            function hideSecondQuestion() {
+                secondQuestion.classList.add("hidden");
+                secondQuestion.setAttribute("aria-hidden", "true");
+            }
+        });
+    }
+})();
+
+(function () {
+    const form = document.querySelector("form");
+    const numberInput = form.querySelector("input[type=\"number\"]");
+    const selectElements = form.querySelectorAll("select");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        validateForm();
+    });
+
+    form.querySelector("[type=\"submit\"").addEventListener("click", function (e) {
+        e.preventDefault();
+        validateForm();
+    });
+
+    numberInput.addEventListener("input", function () {
+        if (this.value.length > 3) {
+            this.value = this.value.slice(0, 3);
+        }
+        if (parseInt(this.value) > 100) {
+            this.value = 100;
+        }
+    });
+
+    [numberInput, Array.from(selectElements)].flat().forEach(function (el) {
+        el.addEventListener("input", function () {
+            removeError(this);
+        });
+    });
+
+    function validateForm() {
+        // number input
+        if (numberInput.validity.valueMissing) {
+            setError(numberInput, "Vul je leeftijd in");
+        } else if (numberInput.validity.badInput) {
+            setError(numberInput, "Vul een getal in");
+        }
+
+        // select
+        form.querySelectorAll(".select").forEach(function (selectGroup) {
+            const selectElement = selectGroup.querySelector("select");
+            if (selectElement.validity.valueMissing) {
+                setError(selectGroup, "Selecteer " + selectElement.name);
+            }
+        });
+    }
+
+    function setError(el, message = null) {
+        const parentElement = el.parentElement;
+
+        window.scrollTo({
+            top: parentElement.scrollTop,
+            behavior: "smooth"
+        });
+
+        if (parentElement.classList.contains("error")) {
+            if (message) {
+                parentElement.lastElementChild.textContent = message;
+            }
+            return;
+        } else {
+            parentElement.classList.add("error");
+        }
+
+        if (message) {
+            const errorMessageDiv = document.createElement("div");
+            errorMessageDiv.textContent = message;
+            errorMessageDiv.classList.add("error-message");
+            parentElement.appendChild(errorMessageDiv);
+        }
+    }
+
+    function removeError(el) {
+        const parentElement = el.parentElement;
+        if (parentElement.classList.contains("error")) {
+            parentElement.classList.remove("error");
+            if (parentElement.lastElementChild.classList.contains("error-message")) {
+                parentElement.removeChild(parentElement.lastElementChild);
+            }
+        }
+    }
+})();
+
+function charCode(e) {
+    return (e.which) ? e.which : charCode(e);
+}
