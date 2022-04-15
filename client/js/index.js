@@ -1,6 +1,6 @@
 (function () {
     const selectNodes = document.querySelectorAll(".select");
-    if (selectNodes.length > 0) {
+    if (selectNodes.length >= 0) {
         selectNodes.forEach(function (select) {
             const nativeSelect = select.querySelector("select");
             const customSelect = select.querySelector(".custom-select");
@@ -147,10 +147,12 @@
 
 (function () {
     const multiQuestions = document.querySelectorAll(".expandable");
-    if (multiQuestions.length > 0) {
+    if (multiQuestions.length >= 0) {
         multiQuestions.forEach(function (multiQuestion) {
             const secondQuestion = multiQuestion.querySelector("div:last-of-type");
-            multiQuestion.querySelectorAll("div:first-of-type input").forEach(function (input) {
+            const inputs = multiQuestion.querySelectorAll("div:first-of-type input");
+
+            [...inputs].reverse().forEach(function (input) {
                 if (input.value === "ja" && input.checked) {
                     showSecondQuestion();
                 } else {
@@ -160,7 +162,7 @@
             });
 
             function toggleSecondQuestion() {
-                if (this.value === "ja") {
+                if (this.value === "ja" && this.checked) {
                     showSecondQuestion();
                 } else {
                     hideSecondQuestion();
@@ -184,6 +186,8 @@
     const form = document.querySelector("form");
     const numberInput = form.querySelector("input[type=\"number\"]");
     const selectElements = form.querySelectorAll("select");
+    const radioInputs = form.querySelectorAll("input[type=\"radio\"]");
+    const optionalUserInputs = form.querySelectorAll("input[value=\"anders\"]");
 
     form.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -196,6 +200,7 @@
     });
 
     numberInput.addEventListener("input", function () {
+        removeError(this);
         if (this.value.length > 3) {
             this.value = this.value.slice(0, 3);
         }
@@ -204,34 +209,81 @@
         }
     });
 
-    [numberInput, Array.from(selectElements)].flat().forEach(function (el) {
-        el.addEventListener("input", function () {
+    [...selectElements, ...radioInputs].flat().forEach(function (el) {
+        el.parentElement.addEventListener("click", function () {
+            removeError(this);
+        });
+    });
+
+    optionalUserInputs.forEach(function (el) {
+        const textareaElement = el.nextElementSibling.firstElementChild;
+        el.parentElement.addEventListener("input", function () {
+            removeError(textareaElement);
+        });
+
+        textareaElement.addEventListener("input", function () {
             removeError(this);
         });
     });
 
     function validateForm() {
-        // number input
-        if (numberInput.validity.valueMissing) {
-            setError(numberInput, "Vul je leeftijd in");
-        } else if (numberInput.validity.badInput) {
-            setError(numberInput, "Vul een getal in");
-        }
+        let valid = true;
+
+        // radio input
+        [...radioInputs].reverse().forEach(function (input) {
+            if (input.validity.valueMissing) {
+                setError(input.parentElement, "Kies een van de opties");
+                valid = false;
+            }
+        });
 
         // select
         form.querySelectorAll(".select").forEach(function (selectGroup) {
             const selectElement = selectGroup.querySelector("select");
             if (selectElement.validity.valueMissing) {
                 setError(selectGroup, "Selecteer " + selectElement.name);
+                valid = false;
             }
         });
+
+        // number input
+        if (numberInput.validity.valueMissing || !numberInput.validity.valid) {
+            setError(numberInput, "Vul je leeftijd in");
+            valid = false;
+        } else if (numberInput.validity.badInput) {
+            setError(numberInput, "Vul een getal in");
+            valid = false;
+        }
+
+        // optional user input
+        optionalUserInputs.forEach(function (opt) {
+            const textareaElement = opt.nextElementSibling.firstElementChild;
+            if (opt.checked) {
+                if (!opt.nextElementSibling.firstElementChild.value) {
+                    setError(opt.nextElementSibling.firstElementChild, "Graag hier iets invullen");
+                    valid = false;
+                }
+            }
+
+            if (textareaElement.value.length > 0 && !opt.checked) {
+                opt.checked = true;
+            }
+        });
+
+        if (valid) {
+            sendData();
+        }
+    }
+
+    function sendData() {
+        const data = new FormData(form);
+        // send data
     }
 
     function setError(el, message = null) {
         const parentElement = el.parentElement;
-
         window.scrollTo({
-            top: parentElement.scrollTop,
+            top: parentElement.offsetTop - (Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0) * 0.5),
             behavior: "smooth"
         });
 
@@ -239,16 +291,14 @@
             if (message) {
                 parentElement.lastElementChild.textContent = message;
             }
-            return;
         } else {
             parentElement.classList.add("error");
-        }
-
-        if (message) {
-            const errorMessageDiv = document.createElement("div");
-            errorMessageDiv.textContent = message;
-            errorMessageDiv.classList.add("error-message");
-            parentElement.appendChild(errorMessageDiv);
+            if (message) {
+                const errorMessageDiv = document.createElement("div");
+                errorMessageDiv.textContent = message;
+                errorMessageDiv.classList.add("error-message");
+                parentElement.appendChild(errorMessageDiv);
+            }
         }
     }
 
