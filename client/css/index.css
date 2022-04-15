@@ -93,7 +93,9 @@ legend::before {
     z-index: -1;
 }
 
-fieldset > div:not(.expandable), fieldset:first-of-type > label, .expandable div {
+fieldset > div:not(.expandable),
+fieldset:first-of-type > label,
+.expandable div {
     display: flex;
     flex-direction: column;
     margin-bottom: 2rem;
@@ -238,6 +240,11 @@ input[type="checkbox"]::after {
 input[type="checkbox"]:checked {
     background-color: #2576e0;
     border-color: #2576e0;
+}
+
+input[value="anders"] + div {
+    display: flex;
+    flex-direction: column;
 }
 
 select, .custom-select .trigger {
@@ -388,6 +395,8 @@ fieldset:first-of-type > label {
     background-color: orange;
     right: 0;
     top: 0.25rem;
+    opacity: 0.75;
+    z-index: -1;
     animation: pulse 2s 4 ease;
 }
 
