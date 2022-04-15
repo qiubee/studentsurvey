@@ -93,6 +93,18 @@ legend::before {
     z-index: -1;
 }
 
+fieldset:nth-of-type(2) legend::before {
+    background-color: #45e2fc;
+}
+
+fieldset:nth-of-type(3) legend::before {
+    background-color: #ff98cd;
+}
+
+fieldset:last-of-type legend::before {
+    background-color: #3cfda3;
+}
+
 fieldset > div:not(.expandable),
 fieldset:first-of-type > label,
 .expandable div {
