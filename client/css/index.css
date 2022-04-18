@@ -16,12 +16,6 @@
     src: url("fonts/tommy-soft-bold.otf") format("opentype");
 }
 
-@font-face {
-    font-family: Tommy Soft;
-    font-weight: 900;
-    src: url("fonts/tommy-soft-black.otf") format("opentype");
-}
-
 *,
 *::before,
 *::after {
