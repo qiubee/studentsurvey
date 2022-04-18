@@ -2,13 +2,34 @@
   "name": "studentsurvey-client",
   "version": "0.1.0",
   "description": "studentsurvey client",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "qiubee",
   "license": "MIT",
+  "main": "js/index.js",
+  "scripts": {
+    "lint": "eslint --fix js/index.js",
+    "prebuild": "npm run lint && rimraf ./dist",
+    "build": "npm run build:html && npm run build:js && npm run build:css",
+    "build:html": "cpy index.html ./dist",
+    "build:css": "cpy css ./dist && npm run build:css:minify",
+    "build:css:minify": "cleancss -o ./dist/css/index.css ./dist/css/index.css",
+    "build:js": "npm run build:js:compile && npm run build:js:minify",
+    "build:js:compile": "babel js --out-dir dist/js",
+    "build:js:minify": "uglifyjs ./dist/js/index.js -o ./dist/js/index.js"
+  },
   "devDependencies": {
-    "eslint": "^8.13.0"
-  }
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
+    "clean-css-cli": "^5.6.0",
+    "cpy-cli": "^4.1.0",
+    "eslint": "^8.13.0",
+    "rimraf": "^3.0.2",
+    "uglify-js": "^3.15.4"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "browserslist": "> 0.25%, not dead, iOS >= 7"
 }
