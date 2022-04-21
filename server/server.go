@@ -7,7 +7,8 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/v1/questions", api.HandleQuestions)
+	http.Handle("/", http.FileServer(http.Dir("./dist"))) // serve static files
+	http.HandleFunc("/v1/", api.Endpoints)
 	err := http.ListenAndServe(":8000", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
