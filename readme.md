@@ -31,7 +31,7 @@ npm run serve
 To install the server run:
 
 ```bash
-go install
+go install studentsurvey/server
 ```
 
 To run the server:
