@@ -4,31 +4,52 @@
   "description": "studentsurvey client",
   "author": "qiubee",
   "license": "MIT",
-  "main": "js/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qiubee/studentsurvey.git"
+  },
   "scripts": {
-    "lint": "eslint --fix js/index.js",
-    "prebuild": "npm run lint && rimraf ./dist",
-    "build": "npm run build:html && npm run build:js && npm run build:css",
-    "build:html": "cpy index.html ./dist",
-    "build:css": "cpy css ./dist && npm run build:css:minify",
-    "build:css:minify": "cleancss -o ./dist/css/index.css ./dist/css/index.css",
+    "lint": "eslint --fix src/js/**/*.js",
+    "clean": "rimraf ./dist && rimraf ../server/dist",
+    "copy": "npm run copy:html && npm run copy:assets",
+    "copy:html": "cpy --flat src/index.html dist",
+    "copy:assets": "cpy . '../../dist/assets' --cwd=src/assets",
+    "prebuild": "npm run lint && npm run clean && npm run copy",
+    "build": "npm run build:js && npm run build:css",
+    "build:css": "cleancss -o dist/css/index.css src/css/index.css",
     "build:js": "npm run build:js:compile && npm run build:js:minify",
-    "build:js:compile": "babel js --out-dir dist/js",
-    "build:js:minify": "uglifyjs ./dist/js/index.js -o ./dist/js/index.js"
+    "build:js:compile": "webpack build --config ./webpack.config.js",
+    "build:js:minify": "uglifyjs ./dist/js/index.js -c -o ./dist/js/index.js",
+    "postbuild": "cpy dist ../server/",
+    "serve": "(cd ../server && go run server.go)"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.17.9",
+    "core-js": "^3.22.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.9",
+    "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.5",
     "clean-css-cli": "^5.6.0",
     "cpy-cli": "^4.1.0",
     "eslint": "^8.13.0",
     "rimraf": "^3.0.2",
-    "uglify-js": "^3.15.4"
+    "uglify-js": "^3.15.4",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
   },
   "babel": {
     "presets": [
-      "@babel/preset-env"
+      [
+        "@babel/env",
+        {
+          "useBuiltIns": "usage",
+          "corejs": 3.6
+        }
+      ]
     ]
   },
   "browserslist": "> 0.25%, not dead, iOS >= 7"
