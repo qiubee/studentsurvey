@@ -8,10 +8,15 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func main() {
+func newRouter() *mux.Router {
 	r := mux.NewRouter()
+	api.Endpoints(r)
+	return r
+}
+
+func main() {
+	r := newRouter()
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./dist/"))) // serve static files
-	r.HandleFunc("/api/v1/{endpoint}", api.Endpoints)
 	err := http.ListenAndServe(":8000", r)
 	if err != nil {
 		log.Fatal(err)
