@@ -1,6 +1,3 @@
-import "core-js/stable";
-import "regenerator-runtime/runtime";
-
 (function () {
     const selectNodes = document.querySelectorAll(".select");
     if (selectNodes.length >= 0) {
