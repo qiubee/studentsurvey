@@ -25,5 +25,6 @@
             "always"
         ],
         "no-trailing-spaces": "error"
-    }
+    },
+    "ignorePatterns": "webpack.config.js"
 }
