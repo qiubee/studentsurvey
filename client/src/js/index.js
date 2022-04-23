@@ -1,3 +1,6 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
 (function () {
     const selectNodes = document.querySelectorAll(".select");
     if (selectNodes.length >= 0) {
@@ -271,13 +274,35 @@
         });
 
         if (valid) {
-            sendData();
+            sendData(window.location.origin + "/api/v1/answers");
         }
     }
 
-    function sendData() {
-        const data = new FormData(form);
+    async function sendData(resource) {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
         // send data
+        try {
+            const response = await fetch(resource, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data),
+            });
+            if (response.ok) {
+                console.log(response);
+            } else {
+                handleResponseError(response.status);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function handleResponseError(responseStatus) {
+        console.log(responseStatus);
+
     }
 
     function setError(el, message = null) {
