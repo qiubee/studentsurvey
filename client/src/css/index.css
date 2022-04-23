@@ -1,19 +1,19 @@
 @font-face {
     font-family: Tommy Soft;
     font-weight: 400;
-    src: url("fonts/tommy-soft-regular.otf") format("opentype");
+    src: url("../assets/fonts/tommy-soft-regular.otf") format("opentype");
 }
 
 @font-face {
     font-family: Tommy Soft;
     font-weight: 500;
-    src: url("fonts/tommy-soft-medium.otf") format("opentype");
+    src: url("../assets/fonts/tommy-soft-medium.otf") format("opentype");
 }
 
 @font-face {
     font-family: Tommy Soft;
     font-weight: 700;
-    src: url("fonts/tommy-soft-bold.otf") format("opentype");
+    src: url("../assets/fonts/tommy-soft-bold.otf") format("opentype");
 }
 
 *,
