@@ -1,24 +1,42 @@
-# Studentsurvey site
+# Studentsurvey
 
-Survey for students about their knowledge & interest of the participation councils of the Amsterdam University of Applied Sciences. It consists of a [client](client) with the survey and a [server](server) to process the results.
+Survey for students about their knowledge & interest of the participation councils of the Amsterdam University of Applied Sciences. This repo consists of a [client](client) with the survey-page and a [server](server) to process and save the results.
 
 ## Installation
 
-1. Clone the repository and navigate to the directories.
+First clone the repository and navigate to the client or server directory. Then follow the installation steps for the [client](#client) and the [server](#server).
 
-2. **Install dependencies:**
+### Client
 
-	```bash
-	npm install
-	```
-
-### Run server
+To install the client dependencies use:
 
 ```bash
-# To run the server
-npm run start
+npm install
+```
 
-# To run the development environment
-npm run dev
+To build the client files in the dist folder type:
+
+```bash
+npm run build
+```
+
+If you want to run the server with npm, then use:
+
+```bash
+npm run serve
+```
+
+### Server
+
+To install the server run:
+
+```bash
+go install
+```
+
+To run the server:
+
+```bash
+go run server.go
 ```
 
