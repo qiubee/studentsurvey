@@ -11,7 +11,7 @@
     <main>
         <h1>Vragenlijst Medezeggenschap & Studentenparticipatie</h1>
         <p>Bedankt dat je deze vragenlijst wilt invullen. De vragen gaan over wat jij weet en vindt van de medezeggenschapsraden op de HvA. Dit duurt ongeveer 5 minuten.</p>
-        <form enctype="application/x-www-form-urlencoded" method="post" action="localhost:8000">
+        <form method="post" action="/api/v1/answers">
             <fieldset>
                 <legend>Algemeen</legend>
                 <label>Hoe oud ben je?<input name="leeftijd" type="number" min="4" max="100" maxlength="3" pattern="^[0-9]+$/" required></label>
