@@ -52,6 +52,14 @@ h1 ~ p:first-of-type {
     word-break: break-word;
 }
 
+ul, ol {
+    list-style: none;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
 form {
     margin-bottom: 2rem;
 }
@@ -108,6 +116,7 @@ fieldset:first-of-type > label,
 }
 
 fieldset:first-of-type > label > * {
+    font-weight: 400;
     margin-top: 0.5rem;
 }
 
@@ -157,7 +166,7 @@ input[type="submit"] {
     display: flex;
     font-size: 1.4rem;
     font-weight: 600;
-    padding: 0.5rem 0.75rem;
+    padding: 0.75rem 1.5rem;
     border: 0.2rem solid #2576e0;
     background-color: white;
     color: #2576e0;
@@ -185,8 +194,11 @@ input[type="checkbox"]:focus {
 }
 
 input[type="radio"] {
-    width: 1.2em;
-    height: 1.2em;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
     color: #2576e0;
     border: 0.175em solid #8190a3;
     border-radius: 50%;
@@ -196,12 +208,16 @@ input[type="radio"] {
 input[type="radio"]::before {
     content: "";
     display: block;
-    width: 0.6em;
-    height: 0.6em;
-    margin: 0.125rem;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    min-width: 8px;
+    min-height: 8px;
+    left: 50%;
+    top: 50%;
     background-color: white;
     border-radius: 50%;
-    transform: scale(0);
+    transform: scale(0) translate(-50%, -50%);
     transition: 60ms transform ease;
 }
 
@@ -211,16 +227,16 @@ input[type="radio"]:checked {
 
 input[type="radio"]:checked::before {
     background-color: #2576e0;
-    transform: scale(1);
+    transform: scale(1) translate(-50%, -50%);
 }
 
 input[type="checkbox"] {
     display: inline-block;
     position: relative;
-    width: 1.2rem;
-    height: 1.2rem;
-    min-width: 1.2rem;
-    min-height: 1.2rem;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
     border-radius: 25%;
     background-color: white;
     border: 0.175em solid #8190a3;
@@ -235,7 +251,7 @@ input[type="checkbox"]::after {
     position: absolute;
     width: 5px;
     height: 10px;
-    left: 5px;
+    left: 6px;
     top: 2px;
     border: 2px solid white;
     border-top: 0;
@@ -387,11 +403,11 @@ fieldset:first-of-type > label {
     display: none;
 }
 
-.error {
+.form-error {
     position: relative;
 }
 
-.error::before {
+.form-error::before {
     content: "";
     display: block;
     position: absolute;
@@ -406,12 +422,90 @@ fieldset:first-of-type > label {
     animation: pulse 2s 4 ease;
 }
 
-.error-message {
+.form-error-message {
     font-size: 0.9rem;
     font-weight: normal;
     color: orangered;
     margin-top: 0.5rem;
 }
+
+.text-center {
+    text-align: center;
+}
+
+/* notifications */
+
+.notification {
+    display: flex;
+    flex-direction: column;
+    max-width: 30rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 0.25rem solid;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    background-color: white;
+    animation: 1s ease-out fade-in;
+}
+
+.notification p {
+    text-align: center;
+    margin: 0.25rem 0 0.5rem 0;
+}
+
+.notification.complete {
+    border-color: #0ed159;
+}
+
+.notification.error {
+    border-color: #fd7658;
+}
+
+.button.close {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: white;
+    border: 0.15rem solid #13478a;
+    align-self: flex-end;
+}
+
+.button.close::before, .button.close::after {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 8px;
+    width: 2px;
+    background-color: #13478a;
+    top: calc(50% - 4px);
+    left: calc(50% - 1px);
+    transform: rotate(45deg);
+}
+
+.button.close::after {
+    transform: rotate(-45deg);
+}
+
+.button.default {
+    width: 12.5rem;
+    padding: 0.75rem 0.5rem;
+    background-color: #2576e0;
+    text-align: center;
+    color: white;
+    margin: 0.5rem auto;
+    align-self: center;
+    border-radius: 0.25rem;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
 
 @supports (-webkit-appearance: none) or (-moz-appearance: none) {
     input[type="checkbox"],
@@ -431,6 +525,15 @@ fieldset:first-of-type > label {
     }
     100% {
         opacity: 100%;
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        bottom: -100%;
+    }
+    100% {
+        bottom: 0;
     }
 }
 

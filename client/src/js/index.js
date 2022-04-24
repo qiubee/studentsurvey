@@ -275,33 +275,6 @@
         }
     }
 
-    async function sendData(resource) {
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
-        // send data
-        try {
-            const response = await fetch(resource, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data),
-            });
-            if (response.ok) {
-                console.log(response);
-            } else {
-                handleResponseError(response.status);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    function handleResponseError(responseStatus) {
-        console.log(responseStatus);
-
-    }
-
     function setError(el, message = null) {
         const parentElement = el.parentElement;
         window.scrollTo({
@@ -309,16 +282,16 @@
             behavior: "smooth"
         });
 
-        if (parentElement.classList.contains("error")) {
+        if (parentElement.classList.contains("form-error")) {
             if (message) {
                 parentElement.lastElementChild.textContent = message;
             }
         } else {
-            parentElement.classList.add("error");
+            parentElement.classList.add("form-error");
             if (message) {
                 const errorMessageDiv = document.createElement("div");
                 errorMessageDiv.textContent = message;
-                errorMessageDiv.classList.add("error-message");
+                errorMessageDiv.classList.add("form-error-message");
                 parentElement.appendChild(errorMessageDiv);
             }
         }
@@ -326,15 +299,185 @@
 
     function removeError(el) {
         const parentElement = el.parentElement;
-        if (parentElement.classList.contains("error")) {
-            parentElement.classList.remove("error");
-            if (parentElement.lastElementChild.classList.contains("error-message")) {
+        if (parentElement.classList.contains("form-error")) {
+            parentElement.classList.remove("form-error");
+            if (parentElement.lastElementChild.classList.contains("form-error-message")) {
                 parentElement.removeChild(parentElement.lastElementChild);
             }
         }
+    }
+
+    async function sendData(resource) {
+        const formData = new FormData(form);
+        const data = new URLSearchParams(formData);
+        // send data
+        try {
+            const response = await fetch(resource, {
+                method: "POST",
+                body: data,
+            });
+            if (response.ok && (response.status === 200 || response.status === 201)) {
+                showConfirmationMessage();
+                showAnswers(formData);
+                window.scrollTo({
+                    top: document.offsetTop - (Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)),
+                    behavior: "smooth"
+                });
+            } else {
+                handleResponseError(response.status);
+            }
+        } catch (error) {
+            showErrorMessage();
+        }
+    }
+
+    async function showErrorMessage() {
+        const div = createDiv(["notification", "error"]);
+        const message = createParagraph("Er ging iets mis met het verwerken van de antwoorden.");
+        const closeButton = createDiv(["button", "close"]);
+        const retryButton = createDiv(["button", "default"]);
+        retryButton.textContent = "Probeer opnieuw";
+        retryButton.addEventListener("click", async function () {
+            await fadeOut(div, 200);
+            document.body.removeChild(div);
+            validateForm();
+        });
+        closeButton.addEventListener("click", async function () {
+            await fadeOut(div, 300);
+            document.body.removeChild(div);
+        });
+        div.appendChild(closeButton);
+        div.appendChild(message);
+        div.appendChild(retryButton);
+        document.body.appendChild(div);
+    }
+
+    function showConfirmationMessage() {
+        const div = createDiv(["notification", "complete"]);
+        const message = createParagraph("Je antwoorden zijn opgestuurd. Bedankt voor het invullen van de vragenlijst!");
+        const button = createDiv(["button", "default"]);
+        button.textContent = "Sluiten";
+        button.addEventListener("click", async function () {
+            await fadeOut(div, 300);
+            document.body.removeChild(div);
+        });
+        div.appendChild(message);
+        div.appendChild(button);
+        document.body.appendChild(div);
+    }
+
+    function createDiv(classNames = null) {
+        const div = document.createElement("div");
+        if (typeof classNames === "string" ) {
+            div.classList.add(classNames);
+        } else if (classNames.length > 0) {
+            classNames.forEach(function (className) {
+                div.classList.add(className);
+            });
+        }
+        return div;
+    }
+
+    function createParagraph(text) {
+        const p = document.createElement("p");
+        p.textContent = text;
+        return p;
+    }
+
+    function showAnswers(formData) {
+        // create selectors from formData keys
+        const selectors = [...new Set([...formData.keys()])];
+        // create a collection of question elements and answers from selectors
+        const qaSet = selectors.map(function (selector) {
+            const input = form.querySelector(`[name="${selector}"]`);
+            if (input.parentElement.firstChild.nodeType === 3) {
+                if (input.type === "select-one") {
+                    return [input.parentElement.parentElement, input.selectedOptions[0].textContent];
+                } else {
+                    return [input.parentElement, input.value];
+                }
+            } else {
+                if (input.type === "checkbox") {
+                    const multipleAnswers = [...input.parentElement.parentElement.querySelectorAll(":checked")].map(function (input) {
+                        if (input.value === "anders") {
+                            return input.labels[0].textContent + input.nextElementSibling.firstElementChild.value;
+                        } else {
+                            return input.labels[0].textContent;
+                        }
+                    });
+                    return [input.parentElement.parentElement, multipleAnswers];
+                } else {
+                    const selectedAnswer = document.querySelector(`[name="${selector}"]:checked`);
+                    return [input.parentElement.parentElement, selectedAnswer.labels[0].textContent];
+                }
+            }
+        });
+        // remove inputs & replace with answers
+        qaSet.forEach(function (qa) {
+            const question = qa[0];
+            const answer = qa[1];
+
+            if (question.firstElementChild.type === "number") {
+                question.removeChild(question.firstElementChild);
+                question.appendChild(createParagraph(answer));
+            } else if (question.lastElementChild) {
+                [...question.children].forEach(function (node) {
+                    if (node.className !== "question") {
+                        node.parentElement.removeChild(node);
+                    }
+                });
+                if (typeof answer === "string") {
+                    question.appendChild(createParagraph(answer));
+                } else if (answer.length > 0) {
+                    const list = document.createElement("ul");
+                    answer.forEach(function (value) {
+                        const item = document.createElement("li");
+                        item.textContent = value;
+                        list.appendChild(item);
+                    });
+                    question.appendChild(list);
+                } else {
+                    question.parentElement.removeChild(question);
+                }
+            }
+        });
+        // remove submit button
+        form.removeChild(form.lastElementChild);
+        // update introduction
+        const intro = document.querySelector("main > p");
+        intro.textContent = "Jouw antwoorden op de vragen.";
+        intro.classList.add("text-center");
+    }
+
+    async function fadeOut(el, duration) {
+        let opacity = 1;
+        const interval = 50;
+        const remaining = interval / duration;
+        const fading = setInterval(decreaseOpacity, interval);
+
+        function decreaseOpacity() {
+            opacity -= remaining;
+            el.style.opacity = opacity;
+            if (opacity <= 0) {
+                clearInterval(fading);
+            }
+        }
+        await wait(duration);
+    }
+
+    function handleResponseError(responseStatus) {
+        console.log(responseStatus);
     }
 })();
 
 function charCode(e) {
     return (e.which) ? e.which : charCode(e);
+}
+
+function wait(milliseconds) {
+    return new Promise(function (res) {
+        setTimeout(function () {
+            res();
+        }, milliseconds);
+    });
 }
