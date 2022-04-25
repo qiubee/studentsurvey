@@ -1,19 +1,23 @@
 @font-face {
     font-family: Tommy Soft;
     font-weight: 400;
-    src: url("../assets/fonts/tommy-soft-regular.otf") format("opentype");
+    font-style: normal;
+    font-display: swap;
+    src: url("../assets/fonts/tommy-soft-regular.eot") format("embedded-opentype"),
+        url("../assets/fonts/tommy-soft-regular.woff2") format("woff2"),
+        url("../assets/fonts/tommy-soft-regular.woff") format("woff"),
+        url("../assets/fonts/tommy-soft-regular.ttf") format("truetype");
 }
 
 @font-face {
     font-family: Tommy Soft;
     font-weight: 500;
-    src: url("../assets/fonts/tommy-soft-medium.otf") format("opentype");
-}
-
-@font-face {
-    font-family: Tommy Soft;
-    font-weight: 700;
-    src: url("../assets/fonts/tommy-soft-bold.otf") format("opentype");
+    font-style: normal;
+    font-display: swap;
+    src: url("../assets/fonts/tommy-soft-medium.eot") format("embedded-opentype"),
+        url("../assets/fonts/tommy-soft-medium.woff2") format("woff2"),
+        url("../assets/fonts/tommy-soft-medium.woff") format("woff"),
+        url("../assets/fonts/tommy-soft-medium.ttf") format("truetype");
 }
 
 *,
@@ -327,10 +331,6 @@ form fieldset:first-of-type label + div .select {
     font-size: 1rem;
     z-index: 1;
     -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 
