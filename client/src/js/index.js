@@ -324,31 +324,38 @@
                     behavior: "smooth"
                 });
             } else {
-                handleResponseError(response.status);
+                handleResponseError(response);
             }
         } catch (error) {
-            showErrorMessage();
+            showErrorMessage("Er kon geen verbinding worden gemaakt.");
         }
     }
 
-    async function showErrorMessage() {
+    async function showErrorMessage(message = null, buttonType = "retry") {
         const div = createDiv(["notification", "error"]);
-        const message = createParagraph("Er ging iets mis met het verwerken van de antwoorden.");
+        let msg;
+        if (message && message.length > 0) {
+            msg = createParagraph(message);
+        } else {
+            msg = createParagraph("Er ging iets mis bij het verwerken van de antwoorden.");
+        }
         const closeButton = createDiv(["button", "close"]);
-        const retryButton = createDiv(["button", "default"]);
-        retryButton.textContent = "Probeer opnieuw";
-        retryButton.addEventListener("click", async function () {
-            await fadeOut(div, 200);
-            document.body.removeChild(div);
-            validateForm();
-        });
         closeButton.addEventListener("click", async function () {
             await fadeOut(div, 300);
             document.body.removeChild(div);
         });
         div.appendChild(closeButton);
-        div.appendChild(message);
-        div.appendChild(retryButton);
+        div.appendChild(msg);
+        if (buttonType === "retry") {
+            const retryButton = createDiv(["button", "default"]);
+            retryButton.textContent = "Probeer opnieuw";
+            retryButton.addEventListener("click", async function () {
+                await fadeOut(div, 200);
+                document.body.removeChild(div);
+                validateForm();
+            });
+            div.appendChild(retryButton);
+        }
         document.body.appendChild(div);
     }
 
@@ -465,8 +472,21 @@
         await wait(duration);
     }
 
-    function handleResponseError(responseStatus) {
-        console.log(responseStatus);
+    function handleResponseError(response) {
+        switch (response.status) {
+        case 400:
+            showErrorMessage("Er ging iets mis bij het verwerken van de antwoorden. Kijk nog een keer of alles wat je hebt ingevuld klopt.");
+            break;
+        case 404:
+            showErrorMessage("Sorry, er worden geen antwoorden meer verwerkt.", "none");
+            break;
+        case 405:
+            showErrorMessage("Op dit moment kunnen er geen antwoorden worden opgestuurd. Probeer het later nog eens.", "none");
+            break;
+        case 500:
+            showErrorMessage("Oops, er ging iets mis in de cloud. We zijn op de hoogte. Probeer het later nog eens.", "none");
+            break;
+        }
     }
 })();
 
