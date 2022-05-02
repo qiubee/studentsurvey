@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -10,27 +11,35 @@ import (
 )
 
 type Answers struct {
-	Leeftijd, Studiejaar          int
-	Opleiding, LidRaad, Faculteit string
-	BetrokkenheidOpleiding        int
-	BetrokkenheidHogeschool       int
-	BelangrijkeOnderwerpen        []string
-	CMR                           Medezeggenschapsraad
-	Faculteitsraad                Faculteitsraad
+	Leeftijd                int                  `schema:"leeftijd"`
+	Studiejaar              int                  `schema:"studiejaar"`
+	Opleiding               string               `schema:"opleiding"`
+	Faculteit               string               `schema:"faculteit"`
+	LidRaad                 string               `schema:"lid-raad"`
+	BetrokkenheidOpleiding  int                  `schema:"betrokkenheid-opleiding"`
+	BetrokkenheidHogeschool int                  `schema:"betrokkenheid-hogeschool"`
+	BelangrijkeOnderwerpen  []string             `schema:"onderwerpen-belangrijk-studie"`
+	CMR                     Medezeggenschapsraad `schema:"cmr"`
+	Faculteitsraad          Faculteitsraad       `schema:"faculteitsraad"`
 }
 
 type Medezeggenschapsraad struct {
-	KennisBestaan           string
-	KennisRol               string
-	KrijgtInfo              string
-	SoortInfo               []string
-	MeerWeten               string
-	BeoordelingCommunicatie int
+	KennisBestaan           string   `schema:"bestaan"`
+	KennisRol               string   `schema:"kennis"`
+	KrijgtInfo              string   `schema:"informatie"`
+	SoortInfo               []string `schema:"soort-informatie"`
+	MeerWeten               string   `schema:"meer-weten"`
+	BeoordelingCommunicatie int      `schema:"communicatie-naar-student"`
 }
 
 type Faculteitsraad struct {
-	Medezeggenschapsraad
-	KennisVerschilCMR string
+	KennisBestaan           string   `schema:"bestaan"`
+	KennisRol               string   `schema:"kennis"`
+	KennisVerschilCMR       string   `schema:"kennis-verschil-cmr"`
+	KrijgtInfo              string   `schema:"informatie"`
+	SoortInfo               []string `schema:"soort-informatie"`
+	MeerWeten               string   `schema:"meer-weten"`
+	BeoordelingCommunicatie int      `schema:"communicatie-naar-student"`
 }
 
 func saveAnswers(w http.ResponseWriter, r *http.Request) {
@@ -43,8 +52,9 @@ func saveAnswers(w http.ResponseWriter, r *http.Request) {
 	}
 	var answers Answers
 	decoder := schema.NewDecoder()
-	err = decoder.Decode(answers, r.PostForm)
+	err = decoder.Decode(&answers, r.PostForm)
 	if err != nil {
+		fmt.Printf("error: %v", err)
 		w.WriteHeader(http.StatusBadRequest)
 		resp := make(map[string]string)
 		resp["message"] = "Data malformed"
