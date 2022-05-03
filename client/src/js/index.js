@@ -486,6 +486,9 @@
         case 500:
             showErrorMessage("Oops, er ging iets mis in de cloud. We zijn op de hoogte. Probeer het later nog eens.", "none");
             break;
+        case 502:
+            showErrorMessage("Er ging iets mis bij het opsturen van de antwoorden. Probeer het op een later moment nog eens.", "none");
+            break;
         }
     }
 })();
