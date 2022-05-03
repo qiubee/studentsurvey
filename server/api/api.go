@@ -16,7 +16,7 @@ import (
 
 type Answers struct {
 	ID                      primitive.ObjectID   `bson:"_id,omitempty"`
-	TimeOfSubmission        primitive.Timestamp  `bson:"time_of_submission"`
+	TimeOfSubmission        time.Time            `bson:"time_of_submission"`
 	Leeftijd                int                  `schema:"leeftijd" bson:"leeftijd"`
 	Studiejaar              int                  `schema:"studiejaar" bson:"studiejaar"`
 	Opleiding               string               `schema:"opleiding" bson:"opleiding"`
@@ -53,6 +53,7 @@ func saveAnswers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var answers Answers
+	answers.TimeOfSubmission = time.Now().UTC()
 	decoder := schema.NewDecoder()
 	err = decoder.Decode(&answers, r.PostForm)
 	if err != nil {
