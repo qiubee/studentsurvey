@@ -23,6 +23,19 @@ func saveAnswers(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+
+	if len(r.Form) < 21 || r.FormValue("leeftijd") == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		resp := make(map[string]string)
+		resp["message"] = "Data is not complete."
+		jsonResp, err := json.Marshal(resp)
+		if err != nil {
+			log.Fatalf("Error in JSON marshal: %s", err)
+		}
+		w.Write(jsonResp)
+		return
+	}
+
 	var answers models.Answers
 	answers.TimeOfSubmission = time.Now().UTC()
 	decoder := schema.NewDecoder()
