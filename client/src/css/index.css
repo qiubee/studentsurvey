@@ -153,7 +153,9 @@ input[type="number"] {
     font-size: 1rem;
     padding: 0.25rem;
     text-align: center;
+    -webkit-appearance: textfield;
     -moz-appearance: textfield;
+    appearance: textfield;
 }
 
 input::-webkit-outer-spin-button,
@@ -170,11 +172,15 @@ input[type="submit"] {
     display: flex;
     font-size: 1.4rem;
     font-weight: 600;
+    margin: 1.5rem auto 2.5rem auto;
     padding: 0.75rem 1.5rem;
     border: 0.2rem solid #2576e0;
     background-color: white;
+    border-radius: 0.25rem;
     color: #2576e0;
-    margin: 1.5rem auto 2.5rem auto;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 input[type="submit"]:hover {
