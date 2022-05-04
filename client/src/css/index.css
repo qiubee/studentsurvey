@@ -213,6 +213,7 @@ input[type="radio"] {
     border: 0.175em solid #8190a3;
     border-radius: 50%;
     appearance: none;
+    background-color: white;
 }
 
 input[type="radio"]::before {
