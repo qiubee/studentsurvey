@@ -5,8 +5,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"studentsurvey/server/api"
-	"studentsurvey/server/db"
 
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
@@ -14,12 +12,12 @@ import (
 
 func newRouter() *mux.Router {
 	r := mux.NewRouter()
-	api.Endpoints(r)
+	// api.Endpoints(r)
 	return r
 }
 
 func main() {
-	db.Connect()
+	// db.Connect()
 	if err := godotenv.Load(); err != nil {
 		log.Println("No .env file found")
 	}
@@ -33,5 +31,5 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	db.Close()
+	// db.Close()
 }
